@@ -1,0 +1,37 @@
+[
+  {
+    "prompt": "Simulate a xenobot made of two cilia cells with motor vectors (1.0, 0.5) and (0.5, 1.0) over 30 steps with noise 0.05, and show the trajectory plot.",
+    "expected_tool": "simulate_xenobot_kinematics",
+    "expected_args": {
+      "cells": [
+        {"motor_x": 1.0, "motor_y": 0.5, "label": "cilia_cell_1"},
+        {"motor_x": 0.5, "motor_y": 1.0, "label": "cilia_cell_2"}
+      ],
+      "steps": 30,
+      "noise": 0.05
+    }
+  },
+  {
+    "prompt": "What happens when two xenobot cells have exactly opposing motor forces? Use motor_x=1.0, motor_y=0.0 and motor_x=-1.0, motor_y=0.0 with no noise over 20 steps.",
+    "expected_tool": "simulate_xenobot_kinematics",
+    "expected_args": {
+      "cells": [
+        {"motor_x": 1.0, "motor_y": 0.0, "label": "forward_cell"},
+        {"motor_x": -1.0, "motor_y": 0.0, "label": "reverse_cell"}
+      ],
+      "steps": 20,
+      "noise": 0.0
+    }
+  },
+  {
+    "prompt": "Run a single-cell xenobot simulation with motor_x=2.0 and motor_y=0.5 for 50 steps.",
+    "expected_tool": "simulate_xenobot_kinematics",
+    "expected_args": {
+      "cells": [
+        {"motor_x": 2.0, "motor_y": 0.5, "label": "solo_cell"}
+      ],
+      "steps": 50,
+      "noise": 0.05
+    }
+  }
+]

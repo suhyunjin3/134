@@ -1,0 +1,105 @@
+{
+  "id": "org.c9.function.biology.biophysics.xenobot_kinematics_simulator.v1",
+  "name": "Xenobot Kinematics Simulator",
+  "description": "Simulates the collective kinematics of xenobot-inspired multicellular constructs. Each cell is represented by an (motor_x, motor_y) force vector; the simulator integrates individual trajectories over configurable steps using NumPy vector addition, computes net centroid displacement, and returns a dual-panel matplotlib trajectory plot encoded as a base64 PNG alongside a plain-text summary.",
+  "type": "function",
+  "keywords": [
+    "xenobot",
+    "kinematics",
+    "simulation",
+    "multicellular",
+    "biophysics",
+    "trajectory",
+    "motor-cell",
+    "displacement",
+    "matplotlib",
+    "numpy",
+    "BioE234"
+  ],
+  "date_created": "2026-04-28T00:00:00Z",
+  "date_last_modified": "2026-04-28T00:00:00Z",
+  "inputs": [
+    {
+      "name": "cells",
+      "type": "list[dict]",
+      "description": "List of cell configuration dicts. Each dict must contain 'motor_x' (float, µm/step) and 'motor_y' (float, µm/step). An optional 'label' (str) key sets the legend entry for that cell."
+    },
+    {
+      "name": "steps",
+      "type": "int",
+      "description": "Number of simulation time-steps to integrate. Defaults to 50."
+    },
+    {
+      "name": "noise",
+      "type": "float",
+      "description": "Standard deviation (µm) of Gaussian noise injected per cell per step. Defaults to 0.05."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "dict",
+      "description": "A dictionary with a 'content' key containing a list of two blocks: [0] a text block with the plain-text simulation summary (cell count, steps, net motor vector, net displacement, final centroid position); [1] an image block with 'data' (base64-encoded PNG) and 'media_type' ('image/png') of the dual-panel trajectory plot."
+    }
+  ],
+  "examples": [
+    {
+      "input": {
+        "cells": [
+          {"motor_x": 1.0, "motor_y": 0.5, "label": "cilia_cell"},
+          {"motor_x": 0.5, "motor_y": 1.0, "label": "passive_cell"}
+        ],
+        "steps": 30,
+        "noise": 0.05
+      },
+      "output": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Xenobot simulation complete.\n  Cells: 2  |  Steps: 30  |  Noise σ: 0.05 µm\n  Net motor vector: (1.500, 1.500) µm/step\n  Net displacement (centroid): 63.2 µm\n  Final centroid position: (44.7, 44.8) µm"
+          },
+          {
+            "type": "image",
+            "data": "<base64-encoded PNG>",
+            "media_type": "image/png"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "cells": [
+          {"motor_x": 1.0, "motor_y": 0.0},
+          {"motor_x": -1.0, "motor_y": 0.0}
+        ],
+        "steps": 10,
+        "noise": 0.0
+      },
+      "output": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Xenobot simulation complete.\n  Cells: 2  |  Steps: 10  |  Noise σ: 0.0 µm\n  Net motor vector: (0.000, 0.000) µm/step\n  Net displacement (centroid): 0.0000 µm\n  Final centroid position: (0.000, 0.000) µm"
+          },
+          {
+            "type": "image",
+            "data": "<base64-encoded PNG>",
+            "media_type": "image/png"
+          }
+        ]
+      }
+    }
+  ],
+  "execution_details": {
+    "language": "Python",
+    "source": "modules/xenobot_project/tools/xenobot_sim.py",
+    "initialization": "initiate",
+    "execution": "run",
+    "disposal": null,
+    "mcp_name": "simulate_xenobot_kinematics",
+    "seq_params": {
+      "cells": "cells",
+      "steps": "steps",
+      "noise": "noise"
+    }
+  }
+}
